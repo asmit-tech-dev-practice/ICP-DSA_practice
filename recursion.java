@@ -1,3 +1,4 @@
+
 public class recursion {
 
     public static void main(String[] args) {
@@ -5,6 +6,7 @@ public class recursion {
         factorialUsingRecursion(8);
         NthFibbonacciUsingRecursion(10);
         returnSumOfDigitsUsingRecursion(123);
+        isPalindromeUsingRecursion("racecar");
 
     }
 
@@ -37,15 +39,25 @@ public class recursion {
     public static int returnSumOfDigitsUsingRecursion(int num) {
         if (num == 0) {
             return 0;
-        } 
-        else {
+        } else {
             int lastDigit = num % 10;
             int remainingNumber = num / 10;
             return lastDigit + returnSumOfDigitsUsingRecursion(remainingNumber);
         }
     }
 
-    
-    
+    public static boolean isPalindromeUsingRecursion(String s) {
+        return checkPalindrome(s, 0, s.length() - 1);
+    }
+
+    public static boolean checkPalindrome(String s, int start, int end) {
+        if (start >= end) {
+            return true;
+        }
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
+        }
+        return checkPalindrome(s, start + 1, end - 1);
+    }
 
 }
