@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class recursion {
 
@@ -59,5 +60,62 @@ public class recursion {
         }
         return checkPalindrome(s, start + 1, end - 1);
     }
+
+    public static void TowerOfHanoi(int N, char src, char aux, char dest) {
+
+        if (N == 0) {
+            return;
+        }
+
+        TowerOfHanoi(N, src, dest, aux);
+        System.out.println(src + "to" + dest);
+        TowerOfHanoi(N, aux, src, dest);
+    }
+
+    // 0, 0, 2
+    // 1, 0, 1
+    // 0, 2, 1
+    // 2, 0, 2
+    // 0, 1, 0
+    // 1, 1, 2
+    // 0, 0, 2
+
+    public int[] grayCode(int A) {
+        List<Integer> result = new ArrayList<>();
+        grayCodeSolve(A, result);
+        int[] pattern = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            pattern[i] = result.get(i);
+        }
+        return pattern;
+    }
+
+    private void grayCodeSolve(int n, List<Integer> result) {
+        if (n == 0) {
+            result.add(0);
+            return;
+        }
+        grayCodeSolve(n - 1, result);
+        int ans = (int) Math.pow(2, n - 1);
+        for (int i = result.size() - 1; i >= 0; i--) {
+            result.add(result.get(i) + ans);
+
+        }
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
