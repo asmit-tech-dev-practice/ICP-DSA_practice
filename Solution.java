@@ -1,53 +1,36 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Solution {
-    public int countInversions(int[] A) {
-         int count = 0;
-        for (int i = 0; i < A.length; i++) {
-            for (int j = i + 1; j < A.length; j++) {
-                if (A[i] > A[j]) {
-                    count++;
-                }
+    public static boolean findPairWithDifference(int[] arr, int K) {
+        int i = 0, j = 1; 
+        
+        while (j < arr.length) {
+            int diff = arr[j] - arr[i]; 
+            
+            if (diff == K && i != j) {
+                return true;
+            }
+            
+            if (diff < K) {
+                j++;
+            } else {
+                i++;
+            }
+
+            if (i == j) {
+                j++;
             }
         }
-        return count;
-
+        
+        return false;
     }
 
-    public int ReversePairs(int[] A) {
-        int count = 0;
-
-        for (int i = 0; i < A.length; i++) {
-            for (int j = i + 1; j < A.length; j++) {
-                if (A[i] > 2 * A[j]) { 
-                    count++; 
-                }
-            }
-        }
-        return count;
-    }
-
-    public int[] grayCode(int A) {
-        List<Integer> result = new ArrayList<>();
-        grayCodeSolve(A, result);
-        int[] pattern = new int[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            pattern[i] = result.get(i);
-        }
-        return pattern;
-    }
-
-    private void grayCodeSolve(int n, List<Integer> result) {
-        if (n == 0) {
-            result.add(0);
-            return;
-        }
-        grayCodeSolve(n - 1, result);
-        int ans = (int) Math.pow(2, n - 1);
-        for (int i = result.size() - 1; i >= 0; i--) {
-            result.add(result.get(i) + ans);
-
+    public static void main(String[] args) {
+        int[] arr = {-3, 0, 1, 3, 6, 8, 11, 14, 21, 25}; 
+        int K = 5;       
+        
+        if (findPairWithDifference(arr, K)) {
+            System.out.println("Pair with difference " + K + " exists.");
+        } else {
+            System.out.println("No such pair exists.");
         }
     }
 }

@@ -9,11 +9,11 @@ public class recursion {
         // returnSumOfDigitsUsingRecursion(123);
         // isPalindromeUsingRecursion("racecar");
 
-        TowerOfHanoi(5, 'A', 'B', 'C');
-        int[] rods = { 5, 0, 0 };
-        solveHanoi(5, 'A', 'C', 'B', rods);
+        // TowerOfHanoi(5, 'A', 'B', 'C');
+        // int[] rods = { 5, 0, 0 };
+        // solveHanoi(5, 'A', 'C', 'B', rods);
 
-        int n = 3;
+        int n = 20;
         ArrayList<Integer> rodA = new ArrayList<>();
         ArrayList<Integer> rodB = new ArrayList<>();
         ArrayList<Integer> rodC = new ArrayList<>();
@@ -167,20 +167,26 @@ public class recursion {
     }
 
     public static void moveBlock(char fromRod, char toRod, ArrayList<Integer> rodA, ArrayList<Integer> rodB, ArrayList<Integer> rodC) {
-        if (fromRod == 'A' && toRod == 'B') {
-            rodB.add(rodA.remove(rodA.size() - 1));
-        } else if (fromRod == 'A' && toRod == 'C') {
-            rodC.add(rodA.remove(rodA.size() - 1));
-        } else if (fromRod == 'B' && toRod == 'A') {
-            rodA.add(rodB.remove(rodB.size() - 1));
-        } else if (fromRod == 'B' && toRod == 'C') {
-            rodC.add(rodB.remove(rodB.size() - 1));
-        } else if (fromRod == 'C' && toRod == 'A') {
-            rodA.add(rodC.remove(rodC.size() - 1));
-        } else if (fromRod == 'C' && toRod == 'B') {
-            rodB.add(rodC.remove(rodC.size() - 1));
-        }
+        ArrayList<Integer> sourceRod = getRodByChar(fromRod, rodA, rodB, rodC);
+        ArrayList<Integer> targetRod = getRodByChar(toRod, rodA, rodB, rodC);
+        moveDisk(sourceRod, targetRod);
     }
+    
+    private static ArrayList<Integer> getRodByChar(char rod, ArrayList<Integer> rodA, ArrayList<Integer> rodB, ArrayList<Integer> rodC) {
+        return switch (rod) {
+            case 'A' -> rodA;
+            case 'B' -> rodB;
+            case 'C' -> rodC;
+            default -> throw new IllegalArgumentException("Invalid rod: " + rod);
+        };
+    }
+    
+    private static void moveDisk(ArrayList<Integer> from, ArrayList<Integer> to) {
+        if (from.isEmpty()) {
+            throw new IllegalStateException("Cannot move from empty rod");
+        }
+        to.add(from.remove(from.size() - 1));
+    }   
 
     public static void printRodState(ArrayList<Integer> rodA, ArrayList<Integer> rodB, ArrayList<Integer> rodC) {
         System.out.println("Rod A: " + rodA);
