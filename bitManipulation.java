@@ -6,8 +6,11 @@ public class bitManipulation {
         System.out.println(countSetBits(89));
         swapBits(45, 2, 5);
         System.out.println(reverseBits(78));
-        int[] arr = { 1, 2, 3, 2, 1 };
-        System.out.println(uniqueElements(arr));
+        int[] arrOne = { 1, 2, 3, 2, 1 };
+        System.out.println(uniqueElements(arrOne));
+        int[] arrTwo = {4, 2, 7, 4, 3, 2, 5, 3};
+        int[] result = findUniques(arrTwo);
+        System.out.println("Unique numbers: " + result[0] + " and " + result[1]);
 
     }
 
@@ -65,5 +68,27 @@ public class bitManipulation {
             result ^= num;
         }
         return result;
+    }
+
+    public static int[] findUniques(int[] arr) {
+        int xorAll = 0;
+        
+        for (int num : arr) {
+            xorAll ^= num;
+        }
+
+        int rightmostBit =xorAll & -xorAll; 
+
+        int x = 0, y = 0;
+
+        for (int num : arr) {
+            if ((num & rightmostBit) == 0) {
+                x ^= num; 
+            } else {
+                y ^= num; 
+            }
+        }
+
+        return new int[]{x, y};
     }
 }
