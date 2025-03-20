@@ -1,39 +1,41 @@
-class Solution {
-    private int[] stack;
-    private int[] minStack;
-    private int topIndex;
-    private int capacity;
+import java.util.*;
+public class Stacks {  
+    public int evalRPN(String[] A) {
+        Stack<Integer> stack = new Stack<>();
 
-    public Solution() {
-        capacity = 1000000; 
-        stack = new int[capacity];
-        minStack = new int[capacity];
-        topIndex = -1;
+        
+        for (String token : A) {
+            if (isOperator(token)) {
+                int b = stack.pop();
+                int a = stack.pop();
+                stack.push(applyOperation(a, b, token));
+            } else {
+                stack.push(Integer.valueOf(token));
+            }
+        }
+
+        return stack.pop();
     }
 
-    public void push(int x) {
-        if (topIndex + 1 >= capacity) return;  
-        topIndex++;
-        stack[topIndex] = x;
-        if (topIndex == 0) {
-            minStack[topIndex] = x;
-        } else {
-            minStack[topIndex] = Math.min(x, minStack[topIndex - 1]);
+    private boolean isOperator(String token) {
+        return "+-*/".contains(token);
+    }
+
+    private int applyOperation(int a, int b, String operator) {
+        switch (operator) {
+            case "+": return a + b;
+            case "-": return a - b;
+            case "*": return a * b;
+            case "/": return a / b;
+            default: throw new IllegalArgumentException("Invalid operator: " + operator);
         }
     }
 
-    public void pop() {
-        if (topIndex == -1) return;  
-        topIndex--;
-    }
+    public static void main(String[] args) {
+        Stacks obj = new Stacks(); 
 
-    public int top() {
-        if (topIndex == -1) return -1;
-        return stack[topIndex];
-    }
-
-    public int getMin() {
-        if (topIndex == -1) return -1;
-        return minStack[topIndex];
+        String[] tokens = {"2", "1", "+", "3", "*"}; 
+        int result = obj.evalRPN(tokens);
+        System.out.println("Result: " + result);  
     }
 }
