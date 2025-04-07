@@ -1,5 +1,3 @@
-import javax.swing.tree.TreeNode;
-
 class TreeN {
     int val;
     TreeN left, right;
